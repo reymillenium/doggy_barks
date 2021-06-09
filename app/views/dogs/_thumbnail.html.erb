@@ -5,15 +5,9 @@
         <div class="w3welcome-text">
           <h5 class="w3l-subtitle"><%= dog.name %></h5>
           <p class="lighter"><%= dog.description %></p>
-<!--          <div style="border-bottom: red solid 2px; padding: 5px">-->
-          <div style="padding: 5px">
-            <%= link_to url_for(dog), class: 'button button-isi', style: 'border-bottom: red solid 2px;' do %>
-              <!--              <span>Read More</span><i class="fa fa-paw"></i>-->
-              <span>Read More</span><i class="fa fa-arrow-right"></i>
-            <% end %>
-          </div>
-
-          <br>
+          <%= link_to url_for(dog), class: 'button button-isi', style: ' padding-bottom: 10px !important;' do %>
+            <span>Read More</span><i class="fa fa-arrow-right"></i>
+          <% end %>
         </div>
       </div>
       <div class="col-md-5 col-sm-5 w3welcome-img">

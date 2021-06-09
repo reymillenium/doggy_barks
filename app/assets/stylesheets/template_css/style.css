@@ -1204,7 +1204,7 @@ h3.agileits-title span {
 	z-index: 1;
 	-webkit-backface-visibility: hidden;
 	-moz-osx-font-smoothing: grayscale;
-	border: 1px solid #FF5722;
+	border: 2px solid #FF5722;
 	overflow: hidden;
 	font-size: 1em;
 	-webkit-transition: .6s all;
