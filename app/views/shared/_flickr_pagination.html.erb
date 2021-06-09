@@ -1,0 +1,13 @@
+<%
+  objects = local_assigns.fetch(:objects) || []
+  with_info = local_assigns.fetch(:with_info) || false
+%>
+
+<div class="flickr_pagination">
+  <% if with_info %>
+    <div class="page_info">
+      <%= page_entries_info objects %>
+    </div>
+  <% end %>
+  <%= will_paginate objects, :container => true %>
+</div>

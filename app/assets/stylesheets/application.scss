@@ -3,13 +3,19 @@
 //@import "bootstrap";
 
 // Using Bootstrap 4:
-@import "bootstrap";
+//@import "bootstrap";
 @import "will_paginate";
 
 @import "font-awesome";
 
-header {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
+// Imports all the template styling:
+@import "template_css/chocolat";
+@import "template_css/style";
+@import "template_css/font-awesome";
+@import "template_css/bootstrap";
+
+//header {
+//  align-items: center;
+//  display: flex;
+//  justify-content: space-between;
+//}

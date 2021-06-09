@@ -1,6 +1,27 @@
-<a href="<%= url_for(dog) %>">
-  <article>
-    <h2 class="dog-name"><%= dog.name %></h2>
-    <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
-  </article>
-</a>
+<div class="welcome agileits">
+  <div class="container">
+    <div class="welcome-w3lsrow">
+      <div class="col-md-7 col-sm-7 w3welcome-left">
+        <div class="w3welcome-text">
+          <h5 class="w3l-subtitle"><%= dog.name %></h5>
+          <p class="lighter"><%= dog.description %></p>
+<!--          <div style="border-bottom: red solid 2px; padding: 5px">-->
+          <div style="padding: 5px">
+            <%= link_to url_for(dog), class: 'button button-isi', style: 'border-bottom: red solid 2px;' do %>
+              <!--              <span>Read More</span><i class="fa fa-paw"></i>-->
+              <span>Read More</span><i class="fa fa-arrow-right"></i>
+            <% end %>
+          </div>
+
+          <br>
+        </div>
+      </div>
+      <div class="col-md-5 col-sm-5 w3welcome-img">
+        <a>
+          <%= image_tag url_for(dog.images.first), class: "img-responsive", alt: "Photo of #{dog.name}" %>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
