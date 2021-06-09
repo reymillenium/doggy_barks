@@ -63,6 +63,10 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'will_paginate', '~> 3.1.0'
 gem 'jquery-rails'
-gem 'bootstrap-sass', '~> 3.4.1'
-gem 'sassc-rails', '>= 2.1.0'
-gem 'will_paginate-bootstrap'
+# Using Bootstrap 3:
+# gem 'bootstrap-sass', '~> 3.4.1'
+# gem 'sassc-rails', '>= 2.1.0'
+# Using Bootstrap 4:
+gem 'bootstrap', '~> 4.0.0'
+# gem 'will_paginate-bootstrap' # Works only with bootstrap 3
+gem 'will_paginate-bootstrap4' # Works  with bootstrap 4

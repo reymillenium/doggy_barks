@@ -1,5 +1,10 @@
-@import "bootstrap-sprockets";
+// Using Bootstrap 3:
+//@import "bootstrap-sprockets";
+//@import "bootstrap";
+
+// Using Bootstrap 4:
 @import "bootstrap";
+@import "will_paginate";
 
 header {
   align-items: center;
