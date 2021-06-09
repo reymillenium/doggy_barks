@@ -4,13 +4,13 @@
   </div>
   <%= will_paginate @dogs, :container => true %>
 </div>
-<div class="flickr_pagination">
-  <div class="page_info">
-    <%= page_entries_info @dogs %>
-  </div>
-  <%= will_paginate @dogs, :container => true %>
-</div>
-<%= will_paginate @dogs, :container => false %>
-<%= will_paginate @dogs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<!--<div class="flickr_pagination">-->
+<!--  <div class="page_info">-->
+    <%#= page_entries_info @dogs %>
+<!--  </div>-->
+  <%#= will_paginate @dogs, :container => true %>
+<!--</div>-->
+<%#= will_paginate @dogs, :container => false %>
+<%#= will_paginate @dogs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 <%= render partial: 'thumbnail', collection: @dogs, as: :dog %>
-<%= will_paginate @dogs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+<%#= will_paginate @dogs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

@@ -66,44 +66,99 @@
   overflow: hidden;
 }
 
+//.apple_pagination {
+//  background: #f1f1f1;
+//  border: 1px solid #e5e5e5;
+//  text-align: center;
+//  padding: 1em;
+//  cursor: default;
+//}
+//
+//.apple_pagination a, .apple_pagination span {
+//  padding: 0.2em 0.3em;
+//}
+//
+//.apple_pagination .disabled {
+//  color: #aaaaaa;
+//}
+//
+//.apple_pagination .current {
+//  font-style: normal;
+//  font-weight: bold;
+//  background-color: #bebebe;
+//  display: inline-block;
+//  width: 1.4em;
+//  height: 1.4em;
+//  line-height: 1.5;
+//  -moz-border-radius: 1em;
+//  -webkit-border-radius: 1em;
+//  border-radius: 1em;
+//  text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px;
+//}
+//
+//.apple_pagination a {
+//  text-decoration: none;
+//  color: black;
+//}
+//
+//.apple_pagination a:hover, .apple_pagination a:focus {
+//  text-decoration: underline;
+//}
+
+
+// Apple styling (scss style):
 .apple_pagination {
   background: #f1f1f1;
   border: 1px solid #e5e5e5;
   text-align: center;
   padding: 1em;
   cursor: default;
+
+  a, span {
+    padding: 0.2em 0.3em;
+    background-color: transparent !important;
+    margin: 10px;
+    border-color: transparent;
+
+  }
+
+  // Custom mod to make it look more sober (selected page indicator):
+  li.active span {
+    background-color: grey !important;
+    //border-color: red !important;
+    border-color: grey !important;
+    border-radius: 0.8em !important;
+    //background-color: green !important;
+  }
+
+  .disabled {
+    color: #aaaaaa;
+  }
+
+  .current {
+    font-style: normal;
+    font-weight: bold;
+    background-color: darken(#f1f1f1, 20);
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    line-height: 1.5;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+    text-shadow: rgba(white, .8) 1px 1px 1px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
 }
 
-.apple_pagination a, .apple_pagination span {
-  padding: 0.2em 0.3em;
-}
-
-.apple_pagination .disabled {
-  color: #aaaaaa;
-}
-
-.apple_pagination .current {
-  font-style: normal;
-  font-weight: bold;
-  background-color: #bebebe;
-  display: inline-block;
-  width: 1.4em;
-  height: 1.4em;
-  line-height: 1.5;
-  -moz-border-radius: 1em;
-  -webkit-border-radius: 1em;
-  border-radius: 1em;
-  text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px;
-}
-
-.apple_pagination a {
-  text-decoration: none;
-  color: black;
-}
-
-.apple_pagination a:hover, .apple_pagination a:focus {
-  text-decoration: underline;
-}
 
 .flickr_pagination {
   text-align: center;
