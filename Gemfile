@@ -70,3 +70,4 @@ gem 'jquery-rails'
 gem 'bootstrap', '~> 4.0.0'
 # gem 'will_paginate-bootstrap' # Works only with bootstrap 3
 gem 'will_paginate-bootstrap4' # Works  with bootstrap 4
+gem "font-awesome-rails"

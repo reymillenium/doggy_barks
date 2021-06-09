@@ -1,0 +1,54 @@
+<br>
+<br>
+<div class="row justify-content-center mt-4">
+  <div class="col-lg-7">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+      <div class="card-header">
+        <img class="ml-4 float-left" style="width: 41px; height: 43px; margin-top: 20px; position: absolute;" src=<%= "#{asset_path 'ruby-on-rails-logo.png'}" %>>
+        <h3 class="text-center font-weight-light my-4">
+          Resend Confirmation Email
+        </h3>
+      </div>
+
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+          <div class="small mb-3 text-muted">
+            * We will send you again an email with a link to confirm your account.
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, class: 'small mb-1' %>
+            <%= f.email_field :email, class: 'form-control py-4', autofocus: true, autocomplete: "email", placeholder: 'Enter email address' %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div class="small mb-1">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+          </div>
+
+          <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+            <%- if controller_name != 'sessions' %>
+              <%= link_to "Return to login", new_session_path(resource_name), class: 'small', style: "text-decoration: none;" %>
+              <br/>
+            <% end %>
+            <%= f.submit "Resend", class: 'btn btn-primary' %>
+          </div>
+
+          <div class="form-group">
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "small", style: "text-decoration: none;" %>
+              <br/>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card-footer text-center">
+        <div class="small">
+          <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "Need an account? Sign up!", new_registration_path(resource_name), style: "text-decoration: none;" %>
+            <br/>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

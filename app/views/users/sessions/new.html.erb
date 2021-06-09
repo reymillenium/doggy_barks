@@ -1,0 +1,81 @@
+<br>
+<br>
+<div class="row justify-content-center mt-4" id="sharp_notes_login_form">
+  <div class="col-lg-5">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+      <div class="card-header">
+        <h3 class="text-center font-weight-light my-4">
+          <img class="ml-4" style="width: 41px; height: 43px;" src=<%= "#{asset_path 'old-note-transparent.png'}" %>>
+          <span style="color: #bfb975; font-weight: bold;">Sharp</span><span style="color: #bc3939; font-weight: bold;">Notes</span>
+        </h3>
+      </div>
+      <i class="fa fa-images" aria-hidden="true">c</i>
+
+
+      <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-group">
+            <%= f.label :email, class: "small mb-1" %><br/>
+            <%= f.email_field :email, class: "form-control py-4", id: "inputEmailAddress", autofocus: true, autocomplete: "email", placeholder: "Enter email address" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password, class: "small mb-1" %><br/>
+            <%= f.password_field :password, class: "form-control py-4", autocomplete: "current-password", placeholder: "Enter password" %>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="form-group">
+              <div class="custom-control custom-checkbox">
+                <%= f.check_box :remember_me, class: "custom-control-input", id: "rememberPasswordCheck" %>
+                <%= f.label :remember_me, "Remember password", class: "custom-control-label" %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "small", style: "text-decoration: none;" %>
+            <% end %>
+            <div class="actions">
+              <%= f.submit "Login", class: "btn btn-primary" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+              <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: "small", style: "text-decoration: none;" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card-footer text-center">
+        <div class="small">
+          <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "Need an account? Sign up!", new_registration_path(resource_name), style: "text-decoration: none;" %>
+            <br/>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= hidden_field_tag 'has_alert', alert %>
+
+<script type="text/javascript" charset="utf-8">
+    var performedActionSelector = "#has_alert";
+    $(document).ready(function () {
+        shakeIfHasAlert();
+    });
+
+    function shakeIfHasAlert() {
+        if ($(performedActionSelector).val() != '') {
+            $('#sharp_notes_login_form').addClass('animate__animated animate__shakeX');
+        }
+    }
+</script>
+
+
+

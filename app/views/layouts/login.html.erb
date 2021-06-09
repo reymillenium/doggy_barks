@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reinier Garcia: Ruby on Rails Developer</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <link rel="shortcut icon" href="<%= asset_path 'ruby-on-rails-logo.png' %>"/>
+
+  <%#= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  <%# if params[:controller] == 'post'  %>
+  <%#= stylesheet_link_tag 'login.scss' %>
+  <%# end %>
+  <%= stylesheet_link_tag 'login' %>
+  <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body class="bg-secondary">
+<div id="layoutAuthentication">
+  <div id="layoutAuthentication_content">
+    <main>
+      <div class="container">
+        <%= render("shared/flash_messages") %>
+        <%= yield %>
+      </div>
+    </main>
+  </div>
+  <div id="layoutAuthentication_footer">
+    <footer class="py-4 bg-light mt-auto">
+      <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between small">
+          <div class="text-muted">&copy; <%= Time.now.year.to_s %>. All rights reserved | Developed by
+            <%= link_to "https://www.linkedin.com/in/reymillenium/", class: "linkedin", target: '_linkedin' do %>
+              Reinier Garcia
+            <% end %>
+          </div>
+          <div>
+            <a href="#">Privacy Policy</a>
+            &middot;
+            <a href="#">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+<%#= javascript_pack_tag 'scripts' %>
+</body>
+</html>

@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Luminari';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Luminari'), url('Luminari-Regular.woff') format('woff'),
+    url('Luminari-Regular.ttf') format('truetype');
+}
