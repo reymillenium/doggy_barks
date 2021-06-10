@@ -33,7 +33,7 @@ class DogsController < ApplicationController
 
     respond_to do |format|
       if @dog.save
-        @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
+        # @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
 
         format.html { redirect_to @dog, notice: 'Dog was successfully created.' }
         format.json { render :show, status: :created, location: @dog }
@@ -51,7 +51,7 @@ class DogsController < ApplicationController
     # binding.pry
     respond_to do |format|
       if @dog.update(dog_params)
-        @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
+        # @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
 
         format.html { redirect_to @dog, notice: 'Dog was successfully updated.' }
         format.json { render :show, status: :ok, location: @dog }

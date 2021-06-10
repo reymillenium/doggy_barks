@@ -24,73 +24,172 @@
 
 <%
   # samples = local_assigns.fetch(:samples)
-  samples = @dog.images
+  images = @dog.images
   # binding.pry
 %>
 
-samples
-<div class="portfolio" id="samples">
-  <div class="container">
-    <h3 class="w3l-title">&nbsp;&nbsp;&nbsp;Samples&nbsp;&nbsp;&nbsp;</h3>
-    <div class="agileits_portfolio_grids">
+<!--samples-->
+<!--<div class="portfolio" id="samples">-->
+<!--  <div class="container">-->
+<!--    <h3 class="w3l-title">&nbsp;&nbsp;&nbsp;Samples&nbsp;&nbsp;&nbsp;</h3>-->
+<!--    <div class="agileits_portfolio_grids">-->
 
-      <% samples.each_slice(3) do |samples_slice| %>
-        <div class="row">
-          <% samples_slice.each do |sample| %>
-            <div class="col-md-4 agileits_portfolio_grid">
-              <div class="agileinfo_portfolio_grid hovereffect">
+      <%# images.each_slice(3) do |images_slice| %>
+<!--        <div class="row">-->
+          <%# images_slice.each do |image| %>
+<!--            <div class="col-md-4 agileits_portfolio_grid">-->
+<!--              <div class="agileinfo_portfolio_grid hovereffect">-->
 <%#= link_to "#{sample.url}", class: "#{sample.title.delete(' ').delete('.')}_url", target: "_#{sample.title.delete(' ').delete('.')}_url" do %>
-                <%= link_to edit_dog_path, class: "test", target: "_test_url" do %>
+                <%#= link_to edit_dog_path, class: "test", target: "_test_url" do %>
                   <%#= image_tag sample.image, class: "img-responsive", alt: ' ', style: "width: 255px; height: 170px;" %>
-                  <%= image_tag sample, class: "img-responsive", alt: ' ', style: "width: 255px; height: 170px;" %>
-                  <div class="overlay">
-<!--                    <h4><%#= sample.title %></h4>-->
-                    <h4><%= 'Title' %></h4>
-<!--                    <p><%#= sample.sub_title %></p>-->
-                    <p><%= 'Subtitle' %></p>
-                  </div>
-                <% end %>
-              </div>
+                  <%#= image_tag image, class: "img-responsive", alt: ' ', style: "width: 255px; height: 170px;" %>
+<!--                  <div class="overlay">-->
+<!--                    <!--                    <h4><%##= sample.title %></h4>-->-->
+<!--                    <h4><%#= 'Title' %></h4>-->
+<!--                    <!--                    <p><%##= sample.sub_title %></p>-->-->
+<!--                    <p><%#= 'Subtitle' %></p>-->
+<!--                  </div>-->
+                <%# end %>
+<!--              </div>-->
+<!--            </div>-->
+          <%# end %>
+<!--        </div>-->
+      <%# end %>
+
+<!--      <div class="clearfix"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--samples-->
+
+
+
+<!-- gallery -->
+<div class="gallery">
+  <div class="container">
+    <!--    <h3 class="agileits-title">Our Gallery</h3>-->
+    <h3 class="agileits-title"><%= @dog.name %></h3>
+    <div class="gallery-agileinfo">
+      <% images.each do |image| %>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 w3gallery-grids">
+          <!--          <a href="images/g1.jpg" class="imghvr-hinge-right figure">-->
+          <a href="<%= url_for(image) %>" class="imghvr-hinge-right figure">
+            <!--            <img src="images/g1.jpg" alt="" title="Pets Care Image"/>-->
+            <%#= image_tag image, class: "img-responsive", alt: ' ' %>
+            <%#= image_tag image, alt: ' ' %>
+            <%#= image_tag image, class: "img-responsive", alt: ' ', style: "width: 255px; height: 170px;" %>
+            <%#= image_tag image, class: "img-responsive", alt: ' ', style: "width: 100%; height: auto; object-fit: cover;" %>
+            <%#= image_tag image, class: "img-responsive", alt: ' ', style: "width: 100%; height: 170px; object-fit: cover;" %>
+            <%= image_tag image, class: "img-responsive", alt: ' ', style: "width: 100%; height: 100%; object-fit: cover;" %>
+
+            <div class="agile-figcaption">
+              <h4>Pets Care</h4>
+              <p>Add Some Description</p>
             </div>
-          <% end %>
+          </a>
         </div>
       <% end %>
-
       <div class="clearfix"></div>
     </div>
   </div>
 </div>
-//samples
+<!-- //gallery -->
 
 
+
+<!-- gallery -->
+<!--<div class="gallery">-->
+<!--  <div class="container">-->
+<!--    <h3 class="agileits-title">Our Gallery</h3>-->
+<!--    <div class="gallery-agileinfo">-->
+<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
+<!--        <a href="images/g1.jpg" class="imghvr-hinge-right figure">-->
+<!--          <img src="images/g1.jpg" alt="" title="Pets Care Image"/>-->
+<!--          <div class="agile-figcaption">-->
+<!--            <h4>Pets Care</h4>-->
+<!--            <p>Add Some Description</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
+<!--        <a href="images/g2.jpg" class="imghvr-hinge-right figure">-->
+<!--          <img src="images/g2.jpg" alt="" title="Pets Care Image"/>-->
+<!--          <div class="agile-figcaption">-->
+<!--            <h4>Pets Care</h4>-->
+<!--            <p>Add Some Description</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
+<!--        <a href="images/g3.jpg" class="imghvr-hinge-right figure">-->
+<!--          <img src="images/g3.jpg" alt="" title="Pets Care Image"/>-->
+<!--          <div class="agile-figcaption">-->
+<!--            <h4>Pets Care</h4>-->
+<!--            <p>Add Some Description</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
+<!--        <a href="images/g4.jpg" class="imghvr-hinge-right figure">-->
+<!--          <img src="images/g4.jpg" alt="" title="Pets Care Image"/>-->
+<!--          <div class="agile-figcaption">-->
+<!--            <h4>Pets Care</h4>-->
+<!--            <p>Add Some Description</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
+<!--        <a href="images/g5.jpg" class="imghvr-hinge-right figure">-->
+<!--          <img src="images/g5.jpg" alt="" title="Pets Care Image"/>-->
+<!--          <div class="agile-figcaption">-->
+<!--            <h4>Pets Care</h4>-->
+<!--            <p>Add Some Description</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
+<!--        <a href="images/img1.jpg" class="imghvr-hinge-right figure">-->
+<!--          <img src="images/img1.jpg" alt="" title="Pets Care Image"/>-->
+<!--          <div class="agile-figcaption">-->
+<!--            <h4>Pets Care</h4>-->
+<!--            <p>Add Some Description</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div class="clearfix"></div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!-- //gallery -->
 
 
 
 <!-- projects -->
-<div class="portfolio" id="projects">
-  <div class="container">
-    <h3 class="w3l-title">My Projects</h3>
-    <div class="agileits_portfolio_grids">
-      <div class="col-md-3 agileits_portfolio_grid">
-        <div class="agileinfo_portfolio_grid hovereffect">
-          <a href=<%= "#{asset_path url_for(@dog.images.first)}" %> data-lightbox="cuseum_pkpass" data-title="Spotzer-cms repo, root route (local setup)">
-            <img src=<%= "#{asset_path url_for(@dog.images.first)}" %> class="img-responsive" alt=" " style="width: 255px; height: 170px;">
-            <div class="overlay">
-              <h4>Cuseum, Inc.</h4>
-              <p>spotzer-cms</p>
-            </div>
-          </a>
+<!--<div class="portfolio" id="projects">-->
+<!--  <div class="container">-->
+<!--    <h3 class="w3l-title">My Projects</h3>-->
+<!--    <div class="agileits_portfolio_grids">-->
+<!--      <div class="col-md-3 agileits_portfolio_grid">-->
+<!--        <div class="agileinfo_portfolio_grid hovereffect">-->
+<!--          <a href=<%#= "#{asset_path url_for(@dog.images.first)}" %> data-lightbox="cuseum_pkpass" data-title="Spotzer-cms repo, root route (local setup)">-->
+<!--            <img src=<%#= "#{asset_path url_for(@dog.images.first)}" %> class="img-responsive" alt=" " style="width: 255px; height: 170px;">-->
+<!--            <div class="overlay">-->
+<!--              <h4>Cuseum, Inc.</h4>-->
+<!--              <p>spotzer-cms</p>-->
+<!--            </div>-->
+<!--          </a>-->
 
-          <% @dog.images.each do |image| %>
-            <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-            <a href=<%= "#{asset_path url_for(image)}" %> data-lightbox="cuseum_pkpass" data-title="Spotzer-cms repo, login page"></a>
-          <% end %>
-        </div>
-      </div>
+<%# @dog.images.each do |image| %>
+<%#= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
+<!--            <a href=<%#= "#{asset_path url_for(image)}" %> data-lightbox="cuseum_pkpass" data-title="Spotzer-cms repo, login page"></a>-->
+<%# end %>
+<!--        </div>-->
+<!--      </div>-->
 
 
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</div>
+<!--      <div class="clearfix"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 <!-- //projects -->
