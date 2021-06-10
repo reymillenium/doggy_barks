@@ -6,13 +6,7 @@ class DogsController < ApplicationController
   # GET /dogs
   # GET /dogs.json
   def index
-    # Gets all the liked dogs, ordered by the amount of likes on the last hour:
-    liked_dogs_ordered_desc_ids = Dog.all.select { |dog| dog.last_hour_likes_amount > 0 }.sort_by(&:last_hour_likes_amount).reverse.pluck(:id)
-    # Gets all the none liked dogs, ordered by id as default:
-    none_liked_dogs_ids = Dog.all.select { |dog| dog.last_hour_likes_amount == 0 }.pluck(:id)
-    # First the liked dogs (ordered desc) and then the none liked dogs (ordered by id as usual):
-    desired_order_ids = liked_dogs_ordered_desc_ids + none_liked_dogs_ids
-    @dogs = Dog.order_as_specified(id: desired_order_ids).paginate(page: params[:page])
+    @dogs = Dog.ordered_by_likes.paginate(page: params[:page])
   end
 
   # GET /dogs/1

@@ -1,5 +1,5 @@
 <%
-  ordinal = Dog.pluck(:id).index(dog.id) + 1
+  ordinal = Dog.ordered_by_likes.pluck(:id).index(dog.id) + 1
 %>
 <div class="welcome agileits">
   <div class="container">

@@ -55,6 +55,16 @@ class Dog < ApplicationRecord
     where.not(id: liked_by_user(user).select(:id))
   }
 
+  scope :ordered_by_likes, -> {
+    # Gets all the liked dogs, ordered by the amount of likes on the last hour:
+    liked_dogs_ordered_desc_ids = Dog.all.select { |dog| dog.last_hour_likes_amount > 0 }.sort_by(&:last_hour_likes_amount).reverse.pluck(:id)
+    # Gets all the none liked dogs, ordered by id as default:
+    none_liked_dogs_ids = Dog.all.select { |dog| dog.last_hour_likes_amount == 0 }.pluck(:id)
+    # First the liked dogs (ordered desc) and then the none liked dogs (ordered by id as usual):
+    desired_order_ids = liked_dogs_ordered_desc_ids + none_liked_dogs_ids
+    Dog.order_as_specified(id: desired_order_ids)
+  }
+
   # Instance Methods:
   def editable_by?(user)
     editable_by_ids = Dog.editable_by(user).pluck(:id)
