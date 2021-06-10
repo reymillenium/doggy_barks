@@ -45,6 +45,14 @@ class Dog < ApplicationRecord
     where(id: not_owned_by(user).select(:id))
   }
 
+  scope :liked_by_user, ->(user) {
+    where(id: Like.by_user(user).select(:dog_id))
+  }
+
+  scope :not_liked_by_user, ->(user) {
+    where.not(id: liked_by_user(user).select(:id))
+  }
+
   # Instance Methods:
   def editable_by?(user)
     editable_by_ids = Dog.editable_by(user).pluck(:id)
@@ -57,8 +65,15 @@ class Dog < ApplicationRecord
   end
 
   def likable_by?(user)
-    likable_by_ids = Dog.likable_by(user).pluck(:id)
-    likable_by_ids.include?(self.id)
+    likable_by_user_ids = Dog.likable_by(user).pluck(:id)
+    not_liked_yet_by_user_ids = Dog.likable_by(user).not_liked_by_user(user).pluck(:id)
+    likable_by_user_ids.include?(self.id) && not_liked_yet_by_user_ids.include?(self.id)
+  end
+
+  def dislikeable_by?(user)
+    likable_by_user_ids = Dog.likable_by(user).pluck(:id)
+    liked_already_by_user_ids = Dog.likable_by(user).liked_by_user(user).pluck(:id)
+    likable_by_user_ids.include?(self.id) && liked_already_by_user_ids.include?(self.id)
   end
 
   def has_no_likes?

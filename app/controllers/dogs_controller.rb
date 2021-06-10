@@ -1,8 +1,8 @@
 class DogsController < ApplicationController
 
   before_action :authenticate_user!, only: [:new, :edit, :create, :destroy]
-  before_action :set_dog, only: [:show, :edit, :update, :destroy]
-  before_action :set_user, only: [:create]
+  before_action :set_dog, only: [:show, :edit, :update, :destroy, :like]
+  before_action :set_user, only: [:create, :like]
 
   # GET /dogs
   # GET /dogs.json
@@ -69,6 +69,33 @@ class DogsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to dogs_url, notice: 'Dog was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def like
+    # @dog = Dog.find(params[:id])
+    # @like = Like.find_by(dog_id: params[:id], user_id: @user.id)
+    # if @like != nil
+    #   @like.destroy
+    # else
+    #   @like = Like.new
+    #   @like.dog_id = @dog.id
+    #   @like.user_id = current_user.id
+    #   @like.save
+    # end
+
+    if @dog.likable_by?(@user)
+      @like = Like.new
+      @like.dog_id = @dog.id
+      @like.user_id = @user.id
+      @like.save
+    else
+      # @like = Like.find_by(dog_id: params[:id], user_id: @user.id)
+      @like = Like.by_user(@user).by_dog(@dog).first
+      @like.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to @dog }
     end
   end
 

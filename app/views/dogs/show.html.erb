@@ -29,7 +29,7 @@
 
             <div class="agile-figcaption">
 <!--              <h4>Owner: <%#= @dog.user.first_name.present? ? @dog.user.first_name : "Unknown name (#{@dog.user.email})" %></h4>-->
-              <h4>Owner: <%= @dog.user.first_name.present? ? @dog.user.first_name : "Unknown name (#{@dog.user.email})" %></h4>
+              <h4>Owner: <%= @dog.try(:user).try(:first_name).present? ? @dog.user.first_name : "Unknown" %></h4>
               <p><%= @dog.description %></p>
             </div>
           </a>
@@ -42,11 +42,22 @@
 <!-- //gallery -->
 <%#= "This doggy is #{@dog.likable_by?(current_user) ? '' : 'not'} likable" %>
 <%= "This doggy has #{@dog.has_no_likes? ? 'no' : @dog.likes.length} likes" %>
+<br>
 <%= "This doggy has #{@dog.likes.length} likes" %>
-<%= "This doggy has this #{@dog.user.email} owner" %>
+<br>
+<%= "This doggy has this #{@dog&.user&.email} owner" %>
+<br>
 <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path if @dog.editable_by?(current_user) %>
 <br>
 <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } if @dog.destroyable_by?(current_user) %>
+<br>
+<%#= link_to "Like #{@dog.name}'s Profile", like_dog_path() if @dog.likable_by?(current_user) %>
+<!--<a href="<%#= dog_path + "/like" %>"><%#= if @user_likes then "Unlike" else "Like" end %></a> <%#= "(#{@total_likes})" %><br>-->
+
+<!--Good-->
+<% if @dog.likable_by?(current_user) || @dog.dislikeable_by?(current_user) %>
+<a href="<%= dog_path + "/like" %>"><%= if @dog.likable_by?(current_user) then "Like" else "Unlike" end %></a> <%= "(#{@dog.likes.length})" %><br>
+  <% end %>
 
 
 <!-- gallery -->
