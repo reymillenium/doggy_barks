@@ -47,10 +47,21 @@ class Dog < ApplicationRecord
 
   # Instance Methods:
   def editable_by?(user)
-    editable_by(user).include?(self)
+    editable_by_ids = Dog.editable_by(user)
+    editable_by_ids.include?(self.id)
+  end
+
+  def destroyable_by?(user)
+    destroyable_by_ids = Dog.editable_by(user)
+    destroyable_by_ids.include?(self.id)
   end
 
   def likable_by?(user)
-    likable_by(user).include?(self)
+    likable_by_ids = Dog.likable_by(user)
+    likable_by_ids.include?(self.id)
+  end
+
+  def has_no_likes?
+    self.likes.empty?
   end
 end

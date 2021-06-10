@@ -1,6 +1,6 @@
 class DogsController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:new, :edit, :create, :destroy]
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:create]
 

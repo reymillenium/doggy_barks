@@ -7,9 +7,10 @@
 
   <p><%= @dog.description %></p>
 
-  <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path %>
+  <%#= link_to "Edit #{@dog.name}'s Profile", edit_dog_path %>
+  <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path if @dog.editable_by?(current_user) %>
   <br>
-  <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } if @dog.destroyable_by?(current_user) %>
 </section>
 
 
