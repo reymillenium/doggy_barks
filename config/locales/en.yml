@@ -1,33 +1,101 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
+# US English translations for Ruby on Rails
 #
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  na: "N/A"
+  lower_na: "n/a"
+  loading: "Loading..."
+  date:
+    formats:
+      default: "%m/%d/%Y"
+      short: "%b %d"
+      short_date_only: "%m/%d/%Y"
+      short_numbers: "%m/%d"
+      long: "%B %d, %Y"
+      long_with_day: "%A, %b %e, %Y"
+      jquery_datepicker: 'mm/dd/yy'
+      js_date_long: 'MMM dd yyyy'
+      js_date_short: 'ddd M/dd'
+      fullcalendar_date_short: 'ddd M/DD'
+      calendar: "%F"
+      moment_internal_date: "MM/DD/YYYY hh:mm A"
+
+    day_names:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    abbr_day_names:
+      - Sun
+      - Mon
+      - Tue
+      - Wed
+      - Thu
+      - Fri
+      - Sat
+
+    month_names:
+      - ~
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+    abbr_month_names:
+      - ~
+      - Jan
+      - Feb
+      - Mar
+      - Apr
+      - May
+      - Jun
+      - Jul
+      - Aug
+      - Sep
+      - Oct
+      - Nov
+      - Dec
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%m/%d/%Y %I:%M %p"
+      jquery_timepicker: 'hh:mm TT'
+      fullcalendar_time: 'hh:mmA'
+      short: "%b %d,  %I:%M %p"
+      short_with_year: "%b %d, %Y at %I:%M %p"
+      short_numbers: "%m/%d %I:%M %p"
+      long_with_day: "%A, %b %e, %Y"
+      long_with_day_and_time: "%A, %b %e %Y, %I:%M %p %Z"
+      long_rails: "%B %d, %Y %H:%M %Z"
+      long: "%B %d, %Y at %I:%M %p %Z"
+      long_without_zone: "%B %d, %Y at %I:%M %p"
+      time_only: "%I:%M %p %Z"
+      time_without_zone: "%I:%M %p"
+      date_time_only: "%m/%d/%Y %I:%M %p %Z"
+      date_time_without_zone: "%m/%d/%Y %I:%M %p"
+      month_year_only: "%B, %Y"
+      date_only: "%B %d, %Y"
+      short_date_only: "%m/%d/%Y"
+      shorter_date_only: "%m/%d"
+      shorter_date_only_with_year: "%m/%d/%y"
+      hm_dbdate_with_ustime: "%Y-%m-%d %I:%M %p %Z"
+      default_rails: "%a, %d %b %Y %H:%M:%S %z"
+      compact: "%m%d%Y%H%M%S"
+      hms: '%H:%M:%S'
+      hms_with_meridian: "%I:%M:%S %p"
+    am: "AM"
+    pm: "PM"

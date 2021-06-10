@@ -1,19 +1,176 @@
-<!--<section>-->
-<!--  <h2><%#= @dog.name %></h2>-->
-<%# @dog.images.each do |image| %>
-<%#= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-<%# end %>
-<!--  <p><%#= @dog.description %></p>-->
-<!--</section>-->
 <%
   images = @dog.images
-  # binding.pry
+  likes_amount = @dog.likes.count
+  likes_pluralization = likes_amount == 1 ? '' : 's'
+  owner_first_name = @dog&.user&.first_name || 'Unknown'
+  # owner_last_name = @dog&.user&.last_name || ''
+  owner_last_name = if_applicable(@dog&.user&.last_name, titleize: false)
+
+  owner_email = @dog&.user&.email || 'Unknown'
+
+  images_amount = images.count
+  images_pluralization = images_amount == 1 ? '' : 's'
 %>
+
+<!-- single -->
+<div class="single welcome">
+  <div class="container">
+    <h3 class="agileits-title"><%= @dog.name %></h3>
+    <div class="markets-grids">
+      <div class="col-md-7 w3ls_single_left">
+        <div class="w3ls_single_left_grid">
+          <div class="w3ls_single_left_grid_right">
+            <h3>Birthday</h3>
+            <h5><%= if_applicable(@dog.birthday.present? ? l(@dog.birthday, format: :date_only) : nil, titleize: false) %></h5>
+            <ul>
+              <li alt="ld"><span class="fa fa-user" aria-hidden="true"></span><%= 'Owner: ' + owner_first_name %></li>
+              <li><span class="fa fa-envelope-o" aria-hidden="true"></span><a href="#">0 Comments</a></li>
+              <li>
+                <span class="fa fa-image" aria-hidden="true"></span><%= images_amount.to_s + " Image#{images_pluralization}" %>
+              </li>
+              <li>
+                <span class="fa fa-heart-o" aria-hidden="true"></span><%= likes_amount.to_s + " Like#{likes_pluralization}" %>
+              </li>
+              <% if @dog.likable_by?(current_user) || @dog.dislikeable_by?(current_user) %>
+                <li>
+                  <%= link_to like_dog_path do %>
+                    <i class="fa fa-lg <%= @dog.likable_by?(current_user) ? "fa-thumbs-up" : "fa-thumbs-down" %>"></i>
+                  <% end %>
+                </li>
+              <% end %>
+
+              <% if @dog.editable_by?(current_user) %>
+                <li>
+                  <%= link_to edit_dog_path do %>
+                    <i class="fa fa-edit"></i> Edit
+                  <% end %>
+                </li>
+              <% end %>
+
+
+              <% if @dog.destroyable_by?(current_user) %>
+                <li>
+                  <%= link_to dog_path, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="fa fa-close"></i> Delete
+                  <% end %>
+                </li>
+              <% end %>
+
+              <%#= link_to "Edit #{@dog.name}'s Profile", edit_dog_path if @dog.editable_by?(current_user) %>
+              <!-- <br>-->
+              <%#= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } if @dog.destroyable_by?(current_user) %>
+              <!-- <br>-->
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="w3ls_single_left_grid1">
+          <!-- <img src="images/g3.jpg" alt=" " class="img-responsive"/>-->
+          <%#= image_tag images.first, class: "img-responsive", alt: ' ', style: "width: 100%; height: 100%; object-fit: cover;" %>
+          <%= image_tag images.first, class: "img-responsive", alt: ' ' %>
+
+          <p>
+            <%#= @dog.description + 'There is no much information about this beauty' %>
+            <%#= if_applicable(@dog.description, titleize: false) %>
+            <%= description_by_value(@dog.description) %>
+            <span></span>
+          </p>
+          <div class="w3ls_single_left_grid1_left">
+            <h4>Share On :</h4>
+          </div>
+          <div class="w3ls_single_left_grid1_right">
+            <div class="social-icon">
+              <a href="#" class="social-button twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="social-button facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="social-button google"><i class="fa fa-google-plus"></i></a>
+              <a href="#" class="social-button dribbble"><i class="fa fa-dribbble"></i></a>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="w3l_admin">
+          <p><i class="fa fa-quote-left"></i> A boy can learn a lot from a dog: obedience, loyalty, and the importance
+            of turning around three times before lying down.</p>
+          <a href="#"><i>Robert Benchley</i></a>
+        </div>
+      </div>
+      <div class="col-md-5 w3ls_single_right">
+        <div class="wthree_recent">
+          <h4>Cuteness Record</h4>
+          <ul>
+            <!-- adoption_date -->
+            <li>
+              <a href="#">
+                <i class="<%= fontawesome_class_if_done(@dog.adoption_date) %>" aria-hidden="true"></i>
+                Adoption Date
+              </a>
+              <span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <%= if_applicable(@dog.adoption_date.present? ? l(@dog.adoption_date, format: :date_only) : nil, titleize: false) %>
+              </span>
+            </li>
+            <!-- created_at -->
+            <li>
+              <a href="#">
+                <i class="<%= fontawesome_class_if_done(@dog.created_at) %>" aria-hidden="true"></i>
+                In the system since:
+              </a>
+              <span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <%= if_applicable(@dog.created_at.present? ? l(@dog.created_at, format: :date_only) : nil, titleize: false) %>
+              </span>
+            </li>
+            <!-- user.first_name -->
+            <li>
+              <a href="#">
+                <i class="<%= fontawesome_class_if_done(owner_first_name) %>" aria-hidden="true"></i>
+                Owner First name
+              </a>
+              <span>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <%= owner_first_name %>
+              </span>
+            </li>
+            <!-- user.last_name -->
+            <li>
+              <a href="#">
+                <i class="<%= fontawesome_class_if_done(owner_last_name) %>" aria-hidden="true"></i>
+                Owner Last Name:
+              </a>
+              <span>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <%= if_applicable(owner_last_name, titleize: false) %>
+              </span>
+            </li>
+            <!-- user.email -->
+            <li>
+              <a href="#">
+                <i class="<%= fontawesome_class_if_done(owner_email) %>" aria-hidden="true"></i>
+                Owner Email:
+              </a>
+              <span>
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <%= if_applicable(@dog&.user&.email, titleize: false) %>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<!-- //single -->
 
 <!-- gallery -->
 <div class="gallery">
   <div class="container">
-    <h3 class="agileits-title"><%= @dog.name %></h3>
+    <h3 class="agileits-title"><%= @dog.name %>'s Gallery</h3>
+    <%# if @dog.likable_by?(current_user) || @dog.dislikeable_by?(current_user) %>
+    <%#= link_to like_dog_path do %>
+    <!--        <i class="fa <%#= @dog.likable_by?(current_user) ? "fa-thumbs-up" : "fa-thumbs-down" %>"></i>-->
+    <%# end %>
+    <%# end %>
     <div class="gallery-agileinfo">
       <% images.each do |image| %>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 w3gallery-grids">
@@ -40,127 +197,10 @@
   </div>
 </div>
 <!-- //gallery -->
-<%#= "This doggy is #{@dog.likable_by?(current_user) ? '' : 'not'} likable" %>
-<%= "This doggy has #{@dog.has_no_likes? ? 'no' : @dog.likes.length} likes" %>
-<br>
-<%= "This doggy has #{@dog.likes.length} likes" %>
-<br>
-<%= "This doggy has this #{@dog&.user&.email} owner" %>
-<br>
-<%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path if @dog.editable_by?(current_user) %>
-<br>
-<%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } if @dog.destroyable_by?(current_user) %>
-<br>
-<%#= link_to "Like #{@dog.name}'s Profile", like_dog_path() if @dog.likable_by?(current_user) %>
-<!--<a href="<%#= dog_path + "/like" %>"><%#= if @user_likes then "Unlike" else "Like" end %></a> <%#= "(#{@total_likes})" %><br>-->
 
-<!--Good-->
-<% if @dog.likable_by?(current_user) || @dog.dislikeable_by?(current_user) %>
-  <!--  It works-->
-  <!--<a href="<%#= dog_path + "/like" %>"><%#= if @dog.likable_by?(current_user) then "Like" else "Unlike" end %></a> <%#= "(#{@dog.likes.length})" %><br>-->
-  <!-- It works too:-->
-  <%= link_to like_dog_path do %>
-    <i class="fa <%= @dog.likable_by?(current_user) ? "fa-thumbs-up" : "fa-thumbs-down" %>"></i>
-    <!--  <i class="fa fa-thumbs-down"></i>-->
-    <!--  <i class="fa fa-thumbs-up"></i>-->
-  <% end %>
-<% end %>
-
-
-
-<!-- gallery -->
-<!--<div class="gallery">-->
-<!--  <div class="container">-->
-<!--    <h3 class="agileits-title">Our Gallery</h3>-->
-<!--    <div class="gallery-agileinfo">-->
-<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
-<!--        <a href="images/g1.jpg" class="imghvr-hinge-right figure">-->
-<!--          <img src="images/g1.jpg" alt="" title="Pets Care Image"/>-->
-<!--          <div class="agile-figcaption">-->
-<!--            <h4>Pets Care</h4>-->
-<!--            <p>Add Some Description</p>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
-<!--        <a href="images/g2.jpg" class="imghvr-hinge-right figure">-->
-<!--          <img src="images/g2.jpg" alt="" title="Pets Care Image"/>-->
-<!--          <div class="agile-figcaption">-->
-<!--            <h4>Pets Care</h4>-->
-<!--            <p>Add Some Description</p>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
-<!--        <a href="images/g3.jpg" class="imghvr-hinge-right figure">-->
-<!--          <img src="images/g3.jpg" alt="" title="Pets Care Image"/>-->
-<!--          <div class="agile-figcaption">-->
-<!--            <h4>Pets Care</h4>-->
-<!--            <p>Add Some Description</p>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
-<!--        <a href="images/g4.jpg" class="imghvr-hinge-right figure">-->
-<!--          <img src="images/g4.jpg" alt="" title="Pets Care Image"/>-->
-<!--          <div class="agile-figcaption">-->
-<!--            <h4>Pets Care</h4>-->
-<!--            <p>Add Some Description</p>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
-<!--        <a href="images/g5.jpg" class="imghvr-hinge-right figure">-->
-<!--          <img src="images/g5.jpg" alt="" title="Pets Care Image"/>-->
-<!--          <div class="agile-figcaption">-->
-<!--            <h4>Pets Care</h4>-->
-<!--            <p>Add Some Description</p>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4 col-xs-6 w3gallery-grids">-->
-<!--        <a href="images/img1.jpg" class="imghvr-hinge-right figure">-->
-<!--          <img src="images/img1.jpg" alt="" title="Pets Care Image"/>-->
-<!--          <div class="agile-figcaption">-->
-<!--            <h4>Pets Care</h4>-->
-<!--            <p>Add Some Description</p>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div class="clearfix"></div>-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!-- //gallery -->
-
-
-
-<!-- projects -->
-<!--<div class="portfolio" id="projects">-->
-<!--  <div class="container">-->
-<!--    <h3 class="w3l-title">My Projects</h3>-->
-<!--    <div class="agileits_portfolio_grids">-->
-<!--      <div class="col-md-3 agileits_portfolio_grid">-->
-<!--        <div class="agileinfo_portfolio_grid hovereffect">-->
-<!--          <a href=<%#= "#{asset_path url_for(@dog.images.first)}" %> data-lightbox="cuseum_pkpass" data-title="Spotzer-cms repo, root route (local setup)">-->
-<!--            <img src=<%#= "#{asset_path url_for(@dog.images.first)}" %> class="img-responsive" alt=" " style="width: 255px; height: 170px;">-->
-<!--            <div class="overlay">-->
-<!--              <h4>Cuseum, Inc.</h4>-->
-<!--              <p>spotzer-cms</p>-->
-<!--            </div>-->
-<!--          </a>-->
-
-<%# @dog.images.each do |image| %>
-<%#= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-<!--            <a href=<%#= "#{asset_path url_for(image)}" %> data-lightbox="cuseum_pkpass" data-title="Spotzer-cms repo, login page"></a>-->
+<%# if @dog.likable_by?(current_user) || @dog.dislikeable_by?(current_user) %>
+<%#= link_to like_dog_path do %>
+<!--    <i class="fa <%#= @dog.likable_by?(current_user) ? "fa-thumbs-up" : "fa-thumbs-down" %>"></i>-->
 <%# end %>
-<!--        </div>-->
-<!--      </div>-->
+<%# end %>
 
-
-<!--      <div class="clearfix"></div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!-- //projects -->

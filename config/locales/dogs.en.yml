@@ -1,0 +1,255 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  app:
+    name: 'DogProfile'
+    extra_pages:
+      about:
+        title: 'Meet the Developer'
+        nav: 'About'
+
+  actions:
+    default: 'Save'
+    submit: 'Submit'
+    sign_and_submit: 'Sign and Submit'
+    cancel: 'Cancel'
+    close: 'Close'
+    new: 'New'
+    add: 'Add'
+    create: 'Create'
+    create_from_file: 'Create from file'
+    save: 'Save'
+    create_and_continue: 'Create'
+    save_send: 'Save & Send'
+    send: 'Send'
+    dispatch: 'Dispatch'
+    prepare: 'Prepare'
+    complete: 'Complete'
+    start: 'Start'
+    restart: 'Re-Start'
+    update: 'Update'
+    delete: 'Delete'
+    delete_selected: 'Delete selected'
+    report: 'Report'
+    report_at: '%{resource} report'
+    adding:
+      short: '...'
+      long: 'Adding...'
+    confirm: 'Are you sure?'
+    search: 'Search'
+    search_for: 'Search for'
+    searching:
+      short: '...'
+      long: 'Searching...'
+    advanced_search: 'Advanced Search'
+    filter: 'Filter'
+    reset: 'Reset'
+    from: 'From date'
+    to: 'To date'
+    select_status: 'Select status'
+    select_activeness: 'Select activeness'
+    select_tag: 'Select tag'
+    select_note: 'Select note'
+    select_resource: 'Select %{resource}'
+    review: 'Review'
+    assign: 'Assign'
+    unassign: 'Unassign'
+    download: 'Download'
+    clone: 'Clone'
+    enroll: 'Enroll'
+    enroll_selected: 'Enroll Selected'
+    unenroll: 'Unenroll'
+    unenroll_selected: 'Unenroll Selected'
+    clonning:
+      short: '...'
+      long: 'Cloning...'
+    export:
+      default: 'Export'
+      to_csv: 'Export to CSV'
+    exporting:
+      short: '...'
+      long: 'Exporting...'
+    import:
+      default: 'Import'
+    importing:
+      short: '...'
+      long: 'Importing...'
+    date:
+      today: 'Today'
+      tomorrow: 'Tomorrow'
+    sending:
+      short: '...'
+      long:  'Sending...'
+    editing:
+      short: '...'
+      long:  'Editing...'
+    updating:
+      short: '...'
+      long:  'Updating...'
+    processing:
+      short: '...'
+      long:  'Processing...'
+      verbose: 'Please give us a few moments while we collect your data...'
+    loading:
+      short: '...'
+      long:  'Loading...'
+    saving_send:
+      short: '...'
+      long:  'Saving & Send...'
+    saving:
+      short: '...'
+      long:  'Saving...'
+    canceling:
+      short: '...'
+      long:  'Canceling...'
+    creating:
+      short: '...'
+      long:  'Creating...'
+    deleting:
+      short: '...'
+      long:  'Deleting...'
+    completing:
+      short: '...'
+      long:  'Completing...'
+    starting:
+      short: '...'
+      long:  'Starting...'
+    enrolling:
+      short: '...'
+      long:  'Enrolling...'
+    unenrolling:
+      short: '...'
+      long:  'Unenrolling...'
+    discontinue: 'Discontinue'
+    remove: 'Remove'
+    mark_delete: 'Mark for deletion'
+    edit: 'Edit'
+    synchronize:
+      default: 'Synchronize'
+      all: 'Synchronize All'
+    synchronizing:
+      short: '...'
+      long: 'Synchronizing...'
+    select: 'Select'
+    deselect: 'Deselect'
+    annotate: 'Annotate'
+    revise: 'Revise'
+    expand: 'Expand'
+    details: 'Details'
+    migrate:
+      default: 'Migrate'
+      all: 'Migrate All'
+    go: 'Go'
+    schedule:
+      default: 'Schedule'
+      all: 'Schedule All'
+    refresh:
+      default: 'Refresh'
+      all: 'Refresh All'
+    preview: 'Preview'
+    survey: 'Survey'
+    json: 'JSON'
+    back_to: 'Back to %{resource}'
+    back: 'Back'
+    resend: 'Re-Send'
+    resend_resource: 'Re-Send %{resource}'
+
+
+  messages:
+    not_applicable: 'N/A'
+
+
+  errors:
+    resources:
+      not_found: 'No %{resource} found'
+      not_assigned: 'No %{resource} assigned'
+      not_settings_found: 'No %{resource} settings found'
+      identified_not_found: 'No %{resource} identified with %{id} was found'
+      detailed_invalid: '%{resource} is invalid. Details: %{details}'
+      missing_invalid: '%{resource} is missing or invalid'
+      check_error_details: '%{resource} is invalid, please check the error details'
+      not_selected: 'No %{resource} selected'
+      invalid_status: 'Invalid %{resource} status given'
+      invalid_code: 'Given code %{code} does not match any %{resource}'
+      disabled: '%{resource} is not enabled. Please review your settings'
+      single_instance_violation: 'Unable to create another instance of %{resource}. Only one instance allowed.'
+      identified_exist_already: 'A %{resource} identified with %{id} already exist'
+      unprocessable: 'The following %{resources} are not processable: %{details}'
+
+
+  dogs:
+    title: 'Dogs'
+    nav: 'Dogs'
+    short: 'Dogs'
+    validation:
+      invalid: 'invalid'
+    report:
+      tab: 'Dogs Report'
+      nav: 'Dogs Report'
+      title: 'Dogs Report'
+    export:
+      to_csv: 'Export to CSV'
+    responses:
+      clone:
+        success: "The %{resource} has been successfully cloned"
+        error: "The %{resource} can't be cloned}"
+      exporting_action:
+        success: 'The Report of %{resource} has been successfully exported to the csv file: "%{file_name}"'
+        error: "It was not possible to export to a csv file the Report of %{resource}"
+    column_header_labels:
+      title: "Name"
+      body: "Body"
+      created_at: "Created At"
+      updated_at: "Updated At"
+    new:
+      header: 'New Dog'
+      button_title: 'New'
+    create:
+      header: 'Create Dog'
+      success_notice: "Dog was successfully created."
+    update:
+      header: 'Edit Dog'
+      success_notice: "Dog was successfully updated."
+    details:
+      header: 'Note Details'
+    edit:
+      header: "Edit Dog"
+    destroy:
+      success_notice: "Dog was successfully destroyed."
+    clone:
+      success_notice: "The Dog with the title: '%{resource}' was successfully cloned."
+    download_note:
+      errors:
+        wrong_password: "The Dog by the name of '%{resource}' has the wrong password."
+
+    form:
+
