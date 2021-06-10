@@ -8,6 +8,7 @@ class DogsController < ApplicationController
   # GET /dogs.json
   def index
     @dogs = Dog.all.paginate(page: params[:page])
+    # @dogs = Dog.owned_by_or_free(current_user).paginate(page: params[:page])
   end
 
   # GET /dogs/1
