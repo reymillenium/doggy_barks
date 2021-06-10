@@ -1,73 +1,18 @@
-<section>
-  <h2><%= @dog.name %></h2>
-
-  <% @dog.images.each do |image| %>
-    <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-  <% end %>
-
-  <p><%= @dog.description %></p>
-
-  <%#= link_to "Edit #{@dog.name}'s Profile", edit_dog_path %>
-  <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path if @dog.editable_by?(current_user) %>
-  <br>
-  <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } if @dog.destroyable_by?(current_user) %>
-
-  <%#= "This doggy is #{@dog.likable_by?(current_user) ? '' : 'not'} likable" %>
-  <%= "This doggy has #{@dog.has_no_likes? ? 'no' : @dog.likes.length} likes" %>
-  <%= "This doggy has #{@dog.likes.length} likes" %>
-  <%= "This doggy has this #{@dog.user.email} owner" %>
-
-
-</section>
-
-
-
+<!--<section>-->
+<!--  <h2><%#= @dog.name %></h2>-->
+  <%# @dog.images.each do |image| %>
+    <%#= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
+  <%# end %>
+<!--  <p><%#= @dog.description %></p>-->
+<!--</section>-->
 <%
-  # samples = local_assigns.fetch(:samples)
   images = @dog.images
   # binding.pry
 %>
 
-<!--samples-->
-<!--<div class="portfolio" id="samples">-->
-<!--  <div class="container">-->
-<!--    <h3 class="w3l-title">&nbsp;&nbsp;&nbsp;Samples&nbsp;&nbsp;&nbsp;</h3>-->
-<!--    <div class="agileits_portfolio_grids">-->
-
-      <%# images.each_slice(3) do |images_slice| %>
-<!--        <div class="row">-->
-          <%# images_slice.each do |image| %>
-<!--            <div class="col-md-4 agileits_portfolio_grid">-->
-<!--              <div class="agileinfo_portfolio_grid hovereffect">-->
-<%#= link_to "#{sample.url}", class: "#{sample.title.delete(' ').delete('.')}_url", target: "_#{sample.title.delete(' ').delete('.')}_url" do %>
-                <%#= link_to edit_dog_path, class: "test", target: "_test_url" do %>
-                  <%#= image_tag sample.image, class: "img-responsive", alt: ' ', style: "width: 255px; height: 170px;" %>
-                  <%#= image_tag image, class: "img-responsive", alt: ' ', style: "width: 255px; height: 170px;" %>
-<!--                  <div class="overlay">-->
-<!--                    <!--                    <h4><%##= sample.title %></h4>-->-->
-<!--                    <h4><%#= 'Title' %></h4>-->
-<!--                    <!--                    <p><%##= sample.sub_title %></p>-->-->
-<!--                    <p><%#= 'Subtitle' %></p>-->
-<!--                  </div>-->
-                <%# end %>
-<!--              </div>-->
-<!--            </div>-->
-          <%# end %>
-<!--        </div>-->
-      <%# end %>
-
-<!--      <div class="clearfix"></div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!--samples-->
-
-
-
 <!-- gallery -->
 <div class="gallery">
   <div class="container">
-    <!--    <h3 class="agileits-title">Our Gallery</h3>-->
     <h3 class="agileits-title"><%= @dog.name %></h3>
     <div class="gallery-agileinfo">
       <% images.each do |image| %>
@@ -83,8 +28,9 @@
             <%= image_tag image, class: "img-responsive", alt: ' ', style: "width: 100%; height: 100%; object-fit: cover;" %>
 
             <div class="agile-figcaption">
-              <h4>Pets Care</h4>
-              <p>Add Some Description</p>
+<!--              <h4>Owner: <%#= @dog.user.first_name.present? ? @dog.user.first_name : "Unknown name (#{@dog.user.email})" %></h4>-->
+              <h4>Owner: <%= @dog.user.first_name.present? ? @dog.user.first_name : "Unknown name (#{@dog.user.email})" %></h4>
+              <p><%= @dog.description %></p>
             </div>
           </a>
         </div>
@@ -94,7 +40,13 @@
   </div>
 </div>
 <!-- //gallery -->
-
+<%#= "This doggy is #{@dog.likable_by?(current_user) ? '' : 'not'} likable" %>
+<%= "This doggy has #{@dog.has_no_likes? ? 'no' : @dog.likes.length} likes" %>
+<%= "This doggy has #{@dog.likes.length} likes" %>
+<%= "This doggy has this #{@dog.user.email} owner" %>
+<%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path if @dog.editable_by?(current_user) %>
+<br>
+<%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } if @dog.destroyable_by?(current_user) %>
 
 
 <!-- gallery -->
