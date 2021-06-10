@@ -108,47 +108,47 @@ en:
       tomorrow: 'Tomorrow'
     sending:
       short: '...'
-      long:  'Sending...'
+      long: 'Sending...'
     editing:
       short: '...'
-      long:  'Editing...'
+      long: 'Editing...'
     updating:
       short: '...'
-      long:  'Updating...'
+      long: 'Updating...'
     processing:
       short: '...'
-      long:  'Processing...'
+      long: 'Processing...'
       verbose: 'Please give us a few moments while we collect your data...'
     loading:
       short: '...'
-      long:  'Loading...'
+      long: 'Loading...'
     saving_send:
       short: '...'
-      long:  'Saving & Send...'
+      long: 'Saving & Send...'
     saving:
       short: '...'
-      long:  'Saving...'
+      long: 'Saving...'
     canceling:
       short: '...'
-      long:  'Canceling...'
+      long: 'Canceling...'
     creating:
       short: '...'
-      long:  'Creating...'
+      long: 'Creating...'
     deleting:
       short: '...'
-      long:  'Deleting...'
+      long: 'Deleting...'
     completing:
       short: '...'
-      long:  'Completing...'
+      long: 'Completing...'
     starting:
       short: '...'
-      long:  'Starting...'
+      long: 'Starting...'
     enrolling:
       short: '...'
-      long:  'Enrolling...'
+      long: 'Enrolling...'
     unenrolling:
       short: '...'
-      long:  'Unenrolling...'
+      long: 'Unenrolling...'
     discontinue: 'Discontinue'
     remove: 'Remove'
     mark_delete: 'Mark for deletion'
@@ -204,6 +204,7 @@ en:
       single_instance_violation: 'Unable to create another instance of %{resource}. Only one instance allowed.'
       identified_exist_already: 'A %{resource} identified with %{id} already exist'
       unprocessable: 'The following %{resources} are not processable: %{details}'
+      invalid_operation: 'The following operation is not valid'
 
 
   dogs:

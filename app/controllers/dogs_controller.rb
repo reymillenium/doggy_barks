@@ -53,7 +53,7 @@ class DogsController < ApplicationController
       if @dog.update(dog_params)
         # @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
 
-        format.html { redirect_to @dog, notice: 'Dog was successfully updated.' }
+        format.html { redirect_to @dog, notice: t('dogs.update.success_notice') }
         format.json { render :show, status: :ok, location: @dog }
       else
         format.html { render :edit }
@@ -67,32 +67,22 @@ class DogsController < ApplicationController
   def destroy
     @dog.destroy
     respond_to do |format|
-      format.html { redirect_to dogs_url, notice: 'Dog was successfully destroyed.' }
+      format.html { redirect_to dogs_url, notice: t('dogs.destroy.success_notice') }
       format.json { head :no_content }
     end
   end
 
   def like
-    # @dog = Dog.find(params[:id])
-    # @like = Like.find_by(dog_id: params[:id], user_id: @user.id)
-    # if @like != nil
-    #   @like.destroy
-    # else
-    #   @like = Like.new
-    #   @like.dog_id = @dog.id
-    #   @like.user_id = current_user.id
-    #   @like.save
-    # end
-
     if @dog.likable_by?(@user)
       @like = Like.new
       @like.dog_id = @dog.id
       @like.user_id = @user.id
       @like.save
-    else
-      # @like = Like.find_by(dog_id: params[:id], user_id: @user.id)
+    elsif @dog.dislikeable_by?(@user)
       @like = Like.by_user(@user).by_dog(@dog).first
       @like.destroy
+    else
+      flash[:error] = t('errors.resources.invalid_operation')
     end
     respond_to do |format|
       format.html { redirect_to @dog }
@@ -100,17 +90,18 @@ class DogsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_dog
-      @dog = Dog.find(params[:id])
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_dog
+    @dog = Dog.find(params[:id])
+  end
 
   def set_user
     @user = current_user
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def dog_params
-      params.require(:dog).permit(:name, :description, images: [])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def dog_params
+    params.require(:dog).permit(:name, :description, images: [])
+  end
 end

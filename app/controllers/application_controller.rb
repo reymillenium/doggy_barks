@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include CommonHelper
 
   layout :layout_by_resource
 
