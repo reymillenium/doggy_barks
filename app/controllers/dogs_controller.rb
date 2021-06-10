@@ -1,5 +1,8 @@
 class DogsController < ApplicationController
+
+  before_action :authenticate_user!
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:create]
 
   # GET /dogs
   # GET /dogs.json
@@ -25,10 +28,11 @@ class DogsController < ApplicationController
   # POST /dogs.json
   def create
     @dog = Dog.new(dog_params)
+    @dog.user_id = @user.id
 
     respond_to do |format|
       if @dog.save
-        @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
+        @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
 
         format.html { redirect_to @dog, notice: 'Dog was successfully created.' }
         format.json { render :show, status: :created, location: @dog }
@@ -42,9 +46,11 @@ class DogsController < ApplicationController
   # PATCH/PUT /dogs/1
   # PATCH/PUT /dogs/1.json
   def update
+
+    # binding.pry
     respond_to do |format|
       if @dog.update(dog_params)
-        @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
+        @dog.images.attach(params[:dog][:images]) if params[:dog][:images].present?
 
         format.html { redirect_to @dog, notice: 'Dog was successfully updated.' }
         format.json { render :show, status: :ok, location: @dog }
@@ -71,8 +77,12 @@ class DogsController < ApplicationController
       @dog = Dog.find(params[:id])
     end
 
+  def set_user
+    @user = current_user
+  end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def dog_params
-      params.require(:dog).permit(:name, :description, :images)
+      params.require(:dog).permit(:name, :description, images: [])
     end
 end

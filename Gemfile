@@ -61,13 +61,26 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Allows a simple pagination:
 gem 'will_paginate', '~> 3.1.0'
+
+# JQuery:
 gem 'jquery-rails'
+
 # Using Bootstrap 3:
 # gem 'bootstrap-sass', '~> 3.4.1'
 # gem 'sassc-rails', '>= 2.1.0'
+#
 # Using Bootstrap 4:
 gem 'bootstrap', '~> 4.0.0'
 # gem 'will_paginate-bootstrap' # Works only with bootstrap 3
+
+# Customizes the pagination links:
 gem 'will_paginate-bootstrap4' # Works  with bootstrap 4
+
+# Fontawesome icons:
 gem "font-awesome-rails"
+
+# Lightbox2 library:
+gem 'lightbox2-rails'
