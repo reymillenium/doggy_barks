@@ -84,3 +84,6 @@ gem "font-awesome-rails"
 
 # Lightbox2 library:
 gem 'lightbox2-rails'
+
+# Allows to query an ActiveRecord class for results from the database in an arbitrary order
+gem 'order_as_specified'

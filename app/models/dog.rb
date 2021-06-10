@@ -1,5 +1,7 @@
 class Dog < ApplicationRecord
   has_many_attached :images
+  # Allows to query an ActiveRecord class for results from the database in an arbitrary order
+  extend OrderAsSpecified
 
   # Defines the amount of rows per page using the will_paginate gem:
   self.per_page = 5
@@ -78,5 +80,9 @@ class Dog < ApplicationRecord
 
   def has_no_likes?
     self.likes.empty?
+  end
+
+  def last_hour_likes_amount
+    likes.where('created_at > ?', 1.hour.ago).count
   end
 end
