@@ -1,15 +1,29 @@
+<%
+  ordinal = Dog.pluck(:id).index(dog.id) + 1
+%>
 <div class="welcome agileits">
   <div class="container">
     <div class="welcome-w3lsrow">
-      <div class="col-md-7 col-sm-7 w3welcome-left">
+      <div class="col-md-5 col-sm-5 w3welcome-left">
         <div class="w3welcome-text">
           <h5 class="w3l-subtitle"><%= dog.name %></h5>
-          <p class="lighter"><%= dog.description %></p>
+          <p class="lighter">
+            <%= description_by_value(dog.description) %>
+          </p>
           <%= link_to url_for(dog), class: 'button button-isi', style: '' do %>
             <span>Read More</span><i class="fa fa-arrow-right"></i>
           <% end %>
         </div>
       </div>
+
+      <div class="col-md-2 col-sm-2 w3welcome-left">
+        <div class="w3welcome-text">
+          <%= link_to "https://bark.co/", class: "social-button twitter", target: '_bark' do %>
+            <%= image_tag url_for(asset_path 'belt_ad.jpg'), class: "img-responsive", style: '', alt: "A nice belt for your puppy" if ordinal.even? %>
+          <% end %>
+        </div>
+      </div>
+
       <div class="col-md-5 col-sm-5 w3welcome-img">
         <a>
           <%= image_tag url_for(dog.images.first), class: "img-responsive", alt: "Photo of #{dog.name}" %>
