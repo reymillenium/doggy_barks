@@ -1,8 +1,8 @@
 <!--<section>-->
 <!--  <h2><%#= @dog.name %></h2>-->
-  <%# @dog.images.each do |image| %>
-    <%#= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
-  <%# end %>
+<%# @dog.images.each do |image| %>
+<%#= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
+<%# end %>
 <!--  <p><%#= @dog.description %></p>-->
 <!--</section>-->
 <%
@@ -28,7 +28,7 @@
             <%= image_tag image, class: "img-responsive", alt: ' ', style: "width: 100%; height: 100%; object-fit: cover;" %>
 
             <div class="agile-figcaption">
-<!--              <h4>Owner: <%#= @dog.user.first_name.present? ? @dog.user.first_name : "Unknown name (#{@dog.user.email})" %></h4>-->
+              <!--              <h4>Owner: <%#= @dog.user.first_name.present? ? @dog.user.first_name : "Unknown name (#{@dog.user.email})" %></h4>-->
               <h4>Owner: <%= @dog.try(:user).try(:first_name).present? ? @dog.user.first_name : "Unknown" %></h4>
               <p><%= @dog.description %></p>
             </div>
@@ -56,8 +56,16 @@
 
 <!--Good-->
 <% if @dog.likable_by?(current_user) || @dog.dislikeable_by?(current_user) %>
-<a href="<%= dog_path + "/like" %>"><%= if @dog.likable_by?(current_user) then "Like" else "Unlike" end %></a> <%= "(#{@dog.likes.length})" %><br>
+  <!--  It works-->
+  <!--<a href="<%#= dog_path + "/like" %>"><%#= if @dog.likable_by?(current_user) then "Like" else "Unlike" end %></a> <%#= "(#{@dog.likes.length})" %><br>-->
+  <!-- It works too:-->
+  <%= link_to like_dog_path do %>
+    <i class="fa <%= @dog.likable_by?(current_user) ? "fa-thumbs-up" : "fa-thumbs-down" %>"></i>
+    <!--  <i class="fa fa-thumbs-down"></i>-->
+    <!--  <i class="fa fa-thumbs-up"></i>-->
   <% end %>
+<% end %>
+
 
 
 <!-- gallery -->
