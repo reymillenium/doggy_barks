@@ -163,4 +163,28 @@ RSpec.describe Dog, type: :model do
       expect(described_class.not_owned_by_nor_free(nil).sort_by(&:id)).to match_array (dogs_created_by_current_user + dogs_created_by_other_user).sort_by(&:id)
     end
   end
+
+  describe '.editable_by' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+
+    it 'should be defined' do
+      expect(described_class).to respond_to :editable_by
+    end
+
+    it 'should return an active record relationship' do
+      expect(described_class.editable_by(current_user)).to be_a ActiveRecord::Relation
+    end
+
+    it 'should return all the dogs created by the current user (only their own can be edited)' do
+      expect(described_class.editable_by(current_user.id)).to match_array dogs_created_by_current_user
+    end
+
+    it 'should not return any dog when the current user is nil' do
+      expect(described_class.editable_by(nil)).to be_empty
+    end
+  end
 end
