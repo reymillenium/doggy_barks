@@ -7,16 +7,17 @@ RSpec.describe Dog, type: :model do
     expect(FactoryBot.build(:dog)).to be_valid
   end
 
+  # Relations:
+
   describe '#user' do
     it 'should be defined' do
       expect(described_object).to respond_to :user
     end
 
-    # it 'should be a optional belongs_to relationship' do
-    #   expect(described_object).to belong_to(:user).class_name('User').optional(true)
-    # end
     it { is_expected.to belong_to(:user).class_name('User').optional(true) }
   end
+
+  # Properties:
 
   describe '#name' do
     it 'should be defined' do
@@ -39,6 +40,8 @@ RSpec.describe Dog, type: :model do
       expect(described_object).to be_valid
     end
   end
+
+  # Scopes:
 
   describe '.owned_by' do
     let(:current_user) { create :user }
@@ -311,6 +314,49 @@ RSpec.describe Dog, type: :model do
     it 'should return all the dogs, ordered this way: First the liked dogs (ordered desc) and then the not liked yet dogs (ordered by id as usual)' do
       expect(described_class.ordered_by_likes).to match_array applicable_scope
     end
+  end
 
+  # Instance methods:
+
+  describe '#editable_by?' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner) { 2.times.map { create :dog } }
+
+    it 'should be defined' do
+      expect(described_object).to respond_to :editable_by?
+    end
+
+    context 'when is a free dog' do
+      # The common described_object is a free dog
+      # let(:described_object) { dogs_already_existing_without_owner.sample }
+
+      it 'should return false when no defined user is given' do
+        expect(described_object.editable_by?(nil)).to be_falsey
+      end
+
+      it 'should return false when any defined user is given' do
+        expect(described_object.editable_by?(current_user)).to be_falsey
+      end
+    end
+
+    context 'when is not a free dog' do
+      let(:described_object) { dogs_created_by_current_user.sample }
+
+      it 'should return false when no defined user is given' do
+        expect(described_object.editable_by?(nil)).to be_falsey
+      end
+
+      it 'should return true when his own owner is given' do
+        expect(described_object.editable_by?(current_user)).to be_truthy
+      end
+
+      it 'should return false when another user is given' do
+        expect(described_object.editable_by?(other_user)).to be_falsey
+      end
+    end
   end
 end
