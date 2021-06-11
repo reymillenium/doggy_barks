@@ -359,4 +359,46 @@ RSpec.describe Dog, type: :model do
       end
     end
   end
+
+  describe '#destroyable_by?' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner) { 2.times.map { create :dog } }
+
+    it 'should be defined' do
+      expect(described_object).to respond_to :destroyable_by?
+    end
+
+    context 'when is a free dog' do
+      # The common described_object is a free dog
+      # let(:described_object) { dogs_already_existing_without_owner.sample }
+
+      it 'should return false when no defined user is given' do
+        expect(described_object.destroyable_by?(nil)).to be_falsey
+      end
+
+      it 'should return false when any defined user is given' do
+        expect(described_object.destroyable_by?(current_user)).to be_falsey
+      end
+    end
+
+    context 'when is not a free dog' do
+      let(:described_object) { dogs_created_by_current_user.sample }
+
+      it 'should return false when no defined user is given' do
+        expect(described_object.destroyable_by?(nil)).to be_falsey
+      end
+
+      it 'should return true when his own owner is given' do
+        expect(described_object.destroyable_by?(current_user)).to be_truthy
+      end
+
+      it 'should return false when another user is given' do
+        expect(described_object.destroyable_by?(other_user)).to be_falsey
+      end
+    end
+  end
 end
