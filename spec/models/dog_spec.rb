@@ -430,8 +430,7 @@ RSpec.describe Dog, type: :model, dog: true do
     end
 
     context 'when is a free dog' do
-      # The common described_object is a free dog
-      # let(:described_object) { dogs_already_existing_without_owner.sample }
+      let(:described_object) { dogs_already_existing_without_owner.sample }
 
       it 'should return false when no defined user is given' do
         expect(described_object.likeable_by?(nil)).to be_falsey
@@ -439,8 +438,8 @@ RSpec.describe Dog, type: :model, dog: true do
 
       context 'when it has not been liked yet' do
         it 'should return true when any user is given' do # TODO: Fix this
-          expect(described_object.likeable_by?(current_user)).to be_falsey
-          expect(described_object.likeable_by?(other_user)).to be_falsey
+          expect(described_object.likeable_by?(current_user)).to be_truthy
+          expect(described_object.likeable_by?(other_user)).to be_truthy
         end
       end
 
@@ -520,8 +519,7 @@ RSpec.describe Dog, type: :model, dog: true do
     end
 
     context 'when is a free dog' do
-      # The common described_object is a free dog
-      # let(:described_object) { dogs_already_existing_without_owner.sample }
+      let(:described_object) { dogs_already_existing_without_owner.sample }
 
       it 'should return false when no defined user is given' do
         expect(described_object.unlikeable_by?(nil)).to be_falsey
