@@ -12,6 +12,10 @@ class Dog < ApplicationRecord
   belongs_to :user, optional: true, foreign_key: :user_id, class_name: User.name, inverse_of: :dogs
   has_many :likes
 
+  # Validations:
+  validates :name, presence: true
+  validates :birthday, timeliness: { on_or_before: lambda { Date.current }, type: :date }, allow_blank: true
+
   # Scopes:
   scope :owned_by, ->(user) {
     where(user_id: user)

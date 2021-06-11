@@ -94,3 +94,6 @@ gem 'lightbox2-rails'
 
 # Allows to query an ActiveRecord class for results from the database in an arbitrary order
 gem 'order_as_specified'
+
+# Complete validation of dates, times and datetimes:
+gem 'validates_timeliness', '~> 6.0.0.alpha1'
