@@ -6,7 +6,7 @@
     <div class="welcome-w3lsrow">
       <div class="col-md-5 col-sm-5 w3welcome-left">
         <div class="w3welcome-text">
-          <h5 class="w3l-subtitle"><%= dog.name %></h5>
+          <h5 class="w3l-subtitle dog-name"><%= dog.name %></h5>
           <p class="lighter">
             <%= description_by_value(dog.description) %>
           </p>
@@ -17,7 +17,7 @@
       </div>
 
       <div class="col-md-2 col-sm-2 w3welcome-left">
-        <div class="w3welcome-text">
+        <div class="w3welcome-text dog-photo">
           <%= link_to "https://bark.co/", class: "social-button twitter", target: '_bark' do %>
             <%= image_tag url_for(asset_path 'belt_ad.jpg'), class: "img-responsive", style: '', alt: "A nice belt for your puppy" if ordinal.even? %>
           <% end %>
