@@ -5,4 +5,7 @@ Rails.application.routes.draw do
     get :like, on: :member
   end
   root to: "dogs#index"
+
+  # The extra_pages view (extra)
+  get 'extra_pages', to: 'extra_pages#about'
 end
