@@ -612,4 +612,49 @@ RSpec.describe Dog, type: :model, dog: true do
       end
     end
   end
+
+  describe '#last_hour_likes_amount' do
+    let!(:user_one) { create :user }
+    let!(:user_two) { create :user }
+    let!(:other_users) { 2.times.map { create :user } }
+    let!(:more_users) { 3.times.map { create :user } }
+
+    let!(:dog_created_by_user_one_without_likes) { create :dog, user: user_one }
+    let!(:dog_created_by_user_two_and_liked_by_many_users) { create :dog, user: user_two }
+
+    let!(:fresh_likes_created_by_other_users_and_for_user_two_dog) {
+      2.times.map { |index| create :like, dog: dog_created_by_user_two_and_liked_by_many_users, user: other_users[index] }
+    }
+
+    let!(:old_likes_created_by_more_users_and_for_user_two_dog) {
+      3.times.map { |index| create :like, dog: dog_created_by_user_two_and_liked_by_many_users, user: more_users[index] }
+    }
+
+    before do
+      old_likes_created_by_more_users_and_for_user_two_dog.each do |like|
+        like.created_at = 1.day.ago
+        like.save
+      end
+    end
+
+    it 'should be defined' do
+      expect(dog_created_by_user_one_without_likes).to respond_to :last_hour_likes_amount
+    end
+
+    context 'when it does not has any likes' do
+      let(:described_object) { dog_created_by_user_one_without_likes }
+
+      it 'should return zero' do
+        expect(described_object.last_hour_likes_amount).to eq 0
+      end
+    end
+
+    context 'when it has at least one like' do
+      let(:described_object) { dog_created_by_user_two_and_liked_by_many_users }
+
+      it 'should return only the amount of the received likes in the last hour' do
+        expect(described_object.last_hour_likes_amount).to eq fresh_likes_created_by_other_users_and_for_user_two_dog.count
+      end
+    end
+  end
 end
