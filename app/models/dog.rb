@@ -20,6 +20,7 @@ class Dog < ApplicationRecord
   scope :owned_by, ->(user) {
     where(user_id: user)
   }
+
   scope :not_owned_by, ->(user) {
     where.not(id: owned_by(user).select(:id))
   }

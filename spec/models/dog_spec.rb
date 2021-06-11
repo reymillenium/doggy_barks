@@ -105,8 +105,29 @@ RSpec.describe Dog, type: :model do
       expect(described_class.free).to be_a ActiveRecord::Relation
     end
 
-    it 'should return all the free dogs, those not created by the current user nor by any other one either' do
+    it 'should return all the free dogs (those not created by the current user nor by any other one either)' do
       expect(described_class.free.sort_by(&:id)).to match_array (dogs_already_existing_without_owner).sort_by(&:id)
+    end
+  end
+
+  describe '.owned_by_or_free' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner) { 2.times.map { create :dog } }
+
+    it 'should be defined' do
+      expect(described_class).to respond_to :owned_by_or_free
+    end
+
+    it 'should return an active record relationship' do
+      expect(described_class.owned_by_or_free(current_user)).to be_a ActiveRecord::Relation
+    end
+
+    it 'should return all the dogs created by the current user and also the free dogs' do
+      expect(described_class.owned_by_or_free(current_user.id).sort_by(&:id)).to match_array (dogs_created_by_current_user + dogs_already_existing_without_owner).sort_by(&:id)
     end
   end
 end
