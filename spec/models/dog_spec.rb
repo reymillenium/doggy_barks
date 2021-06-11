@@ -234,12 +234,42 @@ RSpec.describe Dog, type: :model do
       expect(described_class.liked_by_user(current_user)).to be_a ActiveRecord::Relation
     end
 
-    it 'should return all the dogs liked by the current user (only other dogs can be liked, with or without owner, not their own)' do
+    it 'should return all the dogs already liked by the current user (only other dogs can be liked, with or without owner, not their own)' do
       expect(described_class.liked_by_user(current_user.id).sort_by(&:id)).to match_array (dogs_created_by_other_user + dogs_already_existing_without_owner).sort_by(&:id)
     end
 
     it 'should not return any dog when the current user is nil' do
       expect(described_class.liked_by_user(nil).sort_by(&:id)).to be_empty
+    end
+  end
+
+  describe '.not_liked_by_user' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner) { 2.times.map { create :dog } }
+
+    let!(:likes_created_by_current_user_and_for_other_dogs_and_free_dogs) {
+      2.times.map { |index| create :like, user: current_user, dog: dogs_created_by_other_user[index] }
+      2.times.map { |index| create :like, user: current_user, dog: dogs_already_existing_without_owner[index] }
+    }
+
+    it 'should be defined' do
+      expect(described_class).to respond_to :not_liked_by_user
+    end
+
+    it 'should return an active record relationship' do
+      expect(described_class.not_liked_by_user(current_user)).to be_a ActiveRecord::Relation
+    end
+
+    it 'should return all the dogs that have not been liked yet by the current user (only other dogs can be liked, with or without owner, not their own)' do
+      expect(described_class.not_liked_by_user(current_user.id).sort_by(&:id)).to match_array (dogs_created_by_current_user).sort_by(&:id)
+    end
+
+    it 'should return all the dogs, either liked or not, when the current user is nil' do
+      expect(described_class.not_liked_by_user(nil).sort_by(&:id)).to match_array (dogs_created_by_current_user + dogs_created_by_other_user + dogs_already_existing_without_owner).sort_by(&:id)
     end
   end
 end
