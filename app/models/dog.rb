@@ -81,7 +81,7 @@ class Dog < ApplicationRecord
     destroyable_by_ids.include?(self.id)
   end
 
-  def likable_by?(user)
+  def likeable_by?(user)
     likable_by_user_ids = Dog.likeable_by(user).pluck(:id)
     not_liked_yet_by_user_ids = Dog.likeable_by(user).not_liked_by_user(user).pluck(:id)
     likable_by_user_ids.include?(self.id) && not_liked_yet_by_user_ids.include?(self.id)

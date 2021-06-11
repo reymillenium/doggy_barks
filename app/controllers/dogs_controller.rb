@@ -71,7 +71,7 @@ class DogsController < ApplicationController
   end
 
   def like
-    if @dog.likable_by?(@user)
+    if @dog.likeable_by?(@user)
       @like = Like.new
       @like.dog_id = @dog.id
       @like.user_id = @user.id
