@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Like, type: :model do
+RSpec.describe Like, type: :model, like: true do
   let(:described_object) { build :like }
 
   it "has a valid factory" do

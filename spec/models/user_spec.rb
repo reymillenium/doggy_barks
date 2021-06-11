@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User, type: :model, user: true do
   let(:described_object) { build :user }
 
   it "has a valid factory" do

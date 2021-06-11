@@ -437,7 +437,8 @@ RSpec.describe Dog, type: :model, dog: true do
       end
 
       context 'when it has not been liked yet' do
-        it 'should return true when any user is given' do # TODO: Fix this
+        it 'should return true when any user is given' do
+          # TODO: Fix this
           expect(described_object.likeable_by?(current_user)).to be_truthy
           expect(described_object.likeable_by?(other_user)).to be_truthy
         end
@@ -576,6 +577,38 @@ RSpec.describe Dog, type: :model, dog: true do
         it 'should return false when is given a user that did not liked it' do
           expect(described_object.unlikeable_by?(third_user_that_dont_likes_dogs)).to be_falsey
         end
+      end
+    end
+  end
+
+  describe '#has_no_likes?' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user_and_liked_by_current_user) { 2.times.map { create :dog, user: other_user } }
+
+    let!(:likes_created_by_current_user_and_for_other_user_dogs) {
+      2.times.map { |index| create :like, user: current_user, dog: dogs_created_by_other_user_and_liked_by_current_user[index] }
+    }
+
+    it 'should be defined' do
+      expect(described_object).to respond_to :has_no_likes?
+    end
+
+    context 'when it does not has any likes' do
+      let(:described_object) { dogs_created_by_current_user.sample }
+
+      it 'should return true' do
+        expect(described_object.has_no_likes?).to be_truthy
+      end
+    end
+
+    context 'when it has at least one like' do
+      let(:described_object) { dogs_created_by_other_user_and_liked_by_current_user.sample }
+
+      it 'should return false' do
+        expect(described_object.has_no_likes?).to be_falsey
       end
     end
   end
