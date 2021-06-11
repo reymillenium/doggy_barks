@@ -7,6 +7,8 @@ RSpec.describe Like, type: :model, like: true do
     expect(FactoryBot.build(:like)).to be_valid
   end
 
+  # Relations:
+
   describe '#user' do
     it 'should be defined' do
       expect(described_object).to respond_to :user
@@ -24,6 +26,7 @@ RSpec.describe Like, type: :model, like: true do
   end
 
   # Scopes:
+
   describe '.by_user' do
     let(:current_dogs) { 2.times.map { create :dog } }
     let(:current_user) { create :user }

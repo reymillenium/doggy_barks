@@ -7,6 +7,8 @@ RSpec.describe User, type: :model, user: true do
     expect(FactoryBot.build(:user)).to be_valid
   end
 
+  # Relations:
+
   describe '#dogs' do
     let(:described_object) { build :user, :with_dogs }
 
@@ -18,6 +20,20 @@ RSpec.describe User, type: :model, user: true do
       expect(described_object).to have_many(:dogs).class_name('Dog')
     end
   end
+
+  describe '#likes' do
+    let(:described_object) { build :user, :with_dogs }
+
+    it 'should be defined' do
+      expect(described_object).to respond_to :likes
+    end
+
+    it 'should be a has_many relationship' do
+      expect(described_object).to have_many(:likes).class_name('Like')
+    end
+  end
+
+  # Properties:
 
   describe '#email' do
     it 'should be defined' do
