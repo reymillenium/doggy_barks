@@ -89,6 +89,7 @@ class Dog < ApplicationRecord
   end
 
   def unlikeable_by?(user)
+    return false if user.nil?
     likable_by_user_ids = Dog.likeable_by(user).pluck(:id)
     liked_already_by_user_ids = Dog.likeable_by(user).liked_by_user(user).pluck(:id)
     likable_by_user_ids.include?(self.id) && liked_already_by_user_ids.include?(self.id)
