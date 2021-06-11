@@ -272,4 +272,45 @@ RSpec.describe Dog, type: :model do
       expect(described_class.not_liked_by_user(nil).sort_by(&:id)).to match_array (dogs_created_by_current_user + dogs_created_by_other_user + dogs_already_existing_without_owner).sort_by(&:id)
     end
   end
+
+  describe '.ordered_by_likes' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner) { 2.times.map { create :dog } }
+
+    let!(:likes_created_by_current_user_and_for_other_dogs_and_free_dogs) {
+      2.times.map { |index| create :like, user: current_user, dog: dogs_created_by_other_user[index] }
+      2.times.map { |index| create :like, user: current_user, dog: dogs_already_existing_without_owner[index] }
+    }
+
+    # Adding some likes to previously liked dogs (to test if the special ordering works)
+    let!(:likes_created_by_other_user_and_for_some_of_previous_liked_dogs) {
+      2.times.map { |index| create :like, user: current_user, dog: dogs_created_by_current_user[index] }
+    }
+
+    # Gets all the liked dogs, ordered by the amount of likes on the last hour:
+    liked_dogs_ordered_desc_ids = Dog.all.select { |dog| dog.last_hour_likes_amount > 0 }.sort_by(&:last_hour_likes_amount).reverse.pluck(:id)
+    # Gets all the none liked dogs, ordered by id as default:
+    none_liked_dogs_ids = Dog.all.select { |dog| dog.last_hour_likes_amount == 0 }.pluck(:id)
+    # First the liked dogs (ordered desc) and then the not liked yet dogs (ordered by id as usual):
+    desired_order_ids = liked_dogs_ordered_desc_ids + none_liked_dogs_ids
+
+    let!(:applicable_scope) { Dog.order_as_specified(id: desired_order_ids) }
+
+    it 'should be defined' do
+      expect(described_class).to respond_to :ordered_by_likes
+    end
+
+    it 'should return an active record relationship' do
+      expect(described_class.ordered_by_likes).to be_a ActiveRecord::Relation
+    end
+
+    it 'should return all the dogs, ordered this way: First the liked dogs (ordered desc) and then the not liked yet dogs (ordered by id as usual)' do
+      expect(described_class.ordered_by_likes).to match_array applicable_scope
+    end
+
+  end
 end

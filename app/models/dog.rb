@@ -65,7 +65,7 @@ class Dog < ApplicationRecord
     liked_dogs_ordered_desc_ids = Dog.all.select { |dog| dog.last_hour_likes_amount > 0 }.sort_by(&:last_hour_likes_amount).reverse.pluck(:id)
     # Gets all the none liked dogs, ordered by id as default:
     none_liked_dogs_ids = Dog.all.select { |dog| dog.last_hour_likes_amount == 0 }.pluck(:id)
-    # First the liked dogs (ordered desc) and then the none liked dogs (ordered by id as usual):
+    # First the liked dogs (ordered desc) and then the not liked yet dogs (ordered by id as usual):
     desired_order_ids = liked_dogs_ordered_desc_ids + none_liked_dogs_ids
     Dog.order_as_specified(id: desired_order_ids)
   }
