@@ -48,7 +48,7 @@ class Dog < ApplicationRecord
   }
 
   # The exercise only excludes their own dogs (so the free dogs are still included)
-  scope :likable_by, ->(user) {
+  scope :likeable_by, ->(user) {
     where(id: not_owned_by(user).select(:id))
   }
 
@@ -82,14 +82,14 @@ class Dog < ApplicationRecord
   end
 
   def likable_by?(user)
-    likable_by_user_ids = Dog.likable_by(user).pluck(:id)
-    not_liked_yet_by_user_ids = Dog.likable_by(user).not_liked_by_user(user).pluck(:id)
+    likable_by_user_ids = Dog.likeable_by(user).pluck(:id)
+    not_liked_yet_by_user_ids = Dog.likeable_by(user).not_liked_by_user(user).pluck(:id)
     likable_by_user_ids.include?(self.id) && not_liked_yet_by_user_ids.include?(self.id)
   end
 
   def dislikeable_by?(user)
-    likable_by_user_ids = Dog.likable_by(user).pluck(:id)
-    liked_already_by_user_ids = Dog.likable_by(user).liked_by_user(user).pluck(:id)
+    likable_by_user_ids = Dog.likeable_by(user).pluck(:id)
+    liked_already_by_user_ids = Dog.likeable_by(user).liked_by_user(user).pluck(:id)
     likable_by_user_ids.include?(self.id) && liked_already_by_user_ids.include?(self.id)
   end
 
