@@ -401,4 +401,94 @@ RSpec.describe Dog, type: :model do
       end
     end
   end
+
+  describe '#likeable_by?' do
+    let(:current_user) { create :user }
+    let(:other_user) { create :user }
+    let(:third_user_that_dont_likes_dogs) { create :user }
+
+    let!(:dogs_created_by_current_user) { 2.times.map { create :dog, user: current_user } }
+    let!(:dogs_created_by_other_user) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner) { 2.times.map { create :dog } }
+
+    # let!(:dogs_created_by_current_user_and_liked) { 2.times.map { create :dog, user: current_user } } # A user can not like his own dog
+    let!(:dogs_created_by_other_user_and_liked) { 2.times.map { create :dog, user: other_user } }
+    let!(:dogs_already_existing_without_owner_and_liked) { 2.times.map { create :dog } }
+
+    let!(:likes_created_by_current_user_and_for_other_dogs_and_free_dogs) {
+      2.times.map { |index| create :like, user: current_user, dog: dogs_created_by_other_user_and_liked[index] }
+      2.times.map { |index| create :like, user: current_user, dog: dogs_already_existing_without_owner_and_liked[index] }
+    }
+
+    # Adding some likes to previously liked dogs (to test if the special ordering works)
+    let!(:likes_created_by_other_user_and_for_some_of_previous_liked_dogs) {
+      2.times.map { |index| create :like, user: current_user, dog: dogs_created_by_current_user[index] }
+    }
+
+    it 'should be defined' do
+      expect(described_object).to respond_to :likeable_by?
+    end
+
+    context 'when is a free dog' do
+      # The common described_object is a free dog
+      # let(:described_object) { dogs_already_existing_without_owner.sample }
+
+      it 'should return false when no defined user is given' do
+        expect(described_object.likeable_by?(nil)).to be_falsey
+      end
+
+      context 'when it has not been liked yet' do
+        it 'should return true when any user is given' do
+          expect(described_object.likeable_by?(current_user)).to be_falsey
+          expect(described_object.likeable_by?(other_user)).to be_falsey
+        end
+      end
+
+      context 'when it has been already liked' do
+        let(:described_object) { dogs_already_existing_without_owner_and_liked.sample }
+
+        it 'should return false when is given the user that liked it' do
+          expect(described_object.likeable_by?(current_user)).to be_falsey
+        end
+
+        it 'should return true when is given a user that did not liked it' do
+          expect(described_object.likeable_by?(other_user)).to be_truthy
+        end
+      end
+    end
+
+    context 'when is not a free dog' do
+      context 'when it has not been liked yet' do
+        let(:described_object) { dogs_created_by_current_user.sample }
+
+        it 'should return false when no defined user is given' do
+          expect(described_object.likeable_by?(nil)).to be_falsey
+        end
+
+        it 'should return false when its owner is given' do
+          expect(described_object.likeable_by?(current_user)).to be_falsey
+        end
+
+        it 'should return true when another user is given' do
+          expect(described_object.likeable_by?(other_user)).to be_truthy
+        end
+      end
+
+      context 'when it has been already liked' do
+        let(:described_object) { dogs_created_by_other_user_and_liked.sample }
+
+        it 'should return false when no defined user is given' do
+          expect(described_object.likeable_by?(nil)).to be_falsey
+        end
+
+        it 'should return false when is given the user that liked it' do
+          expect(described_object.likeable_by?(current_user)).to be_falsey
+        end
+
+        it 'should return true when is given a user that did not liked it' do
+          expect(described_object.likeable_by?(third_user_that_dont_likes_dogs)).to be_truthy
+        end
+      end
+    end
+  end
 end
