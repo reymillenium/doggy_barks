@@ -76,7 +76,7 @@ class DogsController < ApplicationController
       @like.dog_id = @dog.id
       @like.user_id = @user.id
       @like.save
-    elsif @dog.dislikeable_by?(@user)
+    elsif @dog.unlikeable_by?(@user)
       @like = Like.by_user(@user).by_dog(@dog).first
       @like.destroy
     else
