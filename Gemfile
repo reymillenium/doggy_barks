@@ -47,6 +47,13 @@ group :development, :test do
   gem 'capybara'
   gem 'pry'
   gem 'rails-controller-testing'
+  gem 'faker'
+  # gem 'rubocop-faker'
+  gem 'shoulda-matchers'
+  gem 'rspec-core'
+  gem 'rspec-expectations'
+  gem 'rspec-mocks'
+  gem 'rspec-support'
 end
 
 group :development do

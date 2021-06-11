@@ -2,6 +2,9 @@
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
+
+require 'shoulda/matchers'
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
@@ -56,4 +59,12 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  #
+  # It solves undefined method `class_name' for #<RSpec::Matchers::BuiltIn::Has:0x00007fdc280d1860> error (rspec tests)
+    Shoulda::Matchers.configure do |shoulda|
+      shoulda.integrate do |with|
+        with.test_framework :rspec
+        with.library        :rails
+      end
+    end
 end
